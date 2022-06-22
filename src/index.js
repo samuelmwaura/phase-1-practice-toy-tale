@@ -32,9 +32,20 @@ function displayOneToy(toy){
   const toyCollectionDiv = document.querySelector('#toy-collection');
   const newToyCardDiv = document.createElement('div');
   newToyCardDiv.classList.add('card');
-  newToyCardDiv.innerHTML = `<h2>${toy.name}</h2> <img class='toy-avatar' src=${toy.image}> <p>${toy.likes}</p> <button id=${toy.id} class='like-btn'>Like ❤️</button>`;
+  const toyName = document.createElement('h2')
+  toyName.textContent = toy.name;
+  const toyImage = document.createElement('img');
+  toyImage.src = toy.image;
+  toyImage.classList.add('toy-avatar');
+  const numberOfLikes = document.createElement('p');
+  numberOfLikes.textContent = toy.likes;
+  const likeButton= document.createElement('button');
+  likeButton.textContent = "Like ❤️";
+  likeButton.classList.add('like-btn');
+  likeButton.setAttribute('id',toy.id);
+  likeButton.addEventListener('click',increaseAToyLikes);
+  newToyCardDiv.append(toyName,toyImage,numberOfLikes,likeButton);
   toyCollectionDiv.appendChild(newToyCardDiv);
-  increaseAToyLikes();
 }
 
 //add a new toy to the collection
@@ -63,13 +74,23 @@ body:JSON.stringify({
 }
 
 //Increase the likes count and update in the DOM
-function increaseAToyLikes(){
-  const likeButtons = document.querySelectorAll('.like-btn') 
-  likeButtons.forEach(likeButton=>{
-  likeButton.addEventListener('click',function(){
-  let currentLikes = likeButton.parentNode.querySelector('p').textContent;
-  currentLikes++;
-  likeButton.parentNode.querySelector('p').textContent = currentLikes;
-  })
-  })
+function increaseAToyLikes(event){
+ const parentDiv =  event.target.parentNode;
+ let currentLikes = parentDiv.querySelector('p').textContent;
+ currentLikes++;
+
+ fetch(`http://localhost:3000/toys/${event.target.id}`,{
+   method:'PATCH',
+   headers:{
+     'content-type':'application/json',
+     Accept:'application/json'
+   },
+   body:JSON.stringify({
+     likes:currentLikes
+   })
+ })
+ .then(response=>response.json())
+ .then(updatedToy=>parentDiv.querySelector('p').textContent = updatedToy.likes)
+ .catch(error=>console.log(error));
+ parentDiv.querySelector('p').textContent=currentLikes;
 }
