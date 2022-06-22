@@ -47,6 +47,18 @@
       "name": "Little Green Men",
       "image": "http://www.pngmart.com/files/3/Toy-Story-Alien-PNG-File.png",
       "likes": 1
+    },
+    {
+      "name": "Acoustic",
+      "image": "https://cdn.shopify.com/s/files/1/0265/6190/4699/files/1024DG_Willcutt_guitars_BE717-BE517ce-Group_1600x.jpg?v=1632409676",
+      "likes": 0,
+      "id": 9
+    },
+    {
+      "name": "Semi Acoustic",
+      "image": "https://images.squarespace-cdn.com/content/v1/5b7d8ac7697a988b951bdc95/1611728210677-016BGGS79ZRHB96CKQS3/image-9.jpg?format=2500w",
+      "likes": 0,
+      "id": 10
     }
   ]
 }
